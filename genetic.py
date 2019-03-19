@@ -2,10 +2,13 @@ import copy
 import random
 
 class Mastermind:
+    """class which represents the problem we're solving - a mastermind game. is essentially a repository for the fitness function"""
+
     def __init__(self, target_list):
         self.target_list = target_list
 
     def score(self, suggestion_list):
+        """takes in genotype string, assess' its fitness"""
         running_score = 0.00
 
         this_target_list = copy.deepcopy(self.target_list)
@@ -29,11 +32,13 @@ class Mastermind:
         return running_score
 
 class GeneticSoup:
+    #represents a population of potential solutions and evolves them
     def __init__(self, pop_size, mastermind):
         self.pop_size = pop_size
         self.phenolist = []
         self.mastermind = mastermind
 
+        #create randomly initialised genotypes
         for x in range(self.pop_size):
             phenotype = {}
             phenotype["geno"] = []
@@ -46,10 +51,12 @@ class GeneticSoup:
 
 
     def evaluate(self):
+        #scores the phenotypes 
         for phenotype in self.phenolist:
             phenotype["fitness"] = self.mastermind.score(phenotype["geno"])
 
     def roulette(self):
+        #creates a list of parents-to-be using the biased roulette wheel method 
         total_fitness = 0
         for phenotype in self.phenolist:
             total_fitness += phenotype["fitness"]
@@ -74,6 +81,7 @@ class GeneticSoup:
 
         
     def breed(self):
+        #breeds list of parents together using single split point crossover operator + random mutation
         self.phenolist.clear()
 
         for idx in range(0, len(self.parents) - 1, 2):
@@ -119,6 +127,7 @@ class GeneticSoup:
 
 
     def evolve_loop(self):
+        #loops until max possible fitness achieved 
         max_fitness = 0.0
         best_pheno = {}
 
