@@ -1,1 +1,3 @@
-# Implementing some ml models I have learnt about in C0395 Introduction to Machine Learning
+# Readme
+
+This repository is for storing implementations of some models I learnt about in CO395 Introduction to Machine Learning
